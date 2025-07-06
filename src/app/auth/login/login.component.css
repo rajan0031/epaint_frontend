@@ -1,0 +1,6 @@
+::ng-deep .custom-snackbar {
+  background-color: #2563eb; /* Tailwind blue-600 */
+  color: white;
+  font-weight: 500;
+  border-radius: 6px;
+}
