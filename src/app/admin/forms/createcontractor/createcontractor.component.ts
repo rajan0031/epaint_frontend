@@ -4,17 +4,17 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import axios from 'axios';
-import { registerUser } from '../../utils/usersApis';
+import { registerUser } from '../../../utils/usersApis';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-createcontractor',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  templateUrl: './createcontractor.component.html',
+  styleUrls: ['./createcontractor.component.css']
 })
-export class RegisterComponent {
+export class CreatecontractorComponent {
   registerForm: FormGroup;
   isLoading = false;
 
@@ -25,7 +25,7 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
       contactNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      role: [3]
+      role: ['', Validators.required] // default to contractor
     });
   }
 
@@ -34,7 +34,7 @@ export class RegisterComponent {
       this.isLoading = true;
       try {
         const formData = this.registerForm.value;
-
+        console.log("the form data is ", formData)
         const response = await axios.post(registerUser, {
           name: formData.name,
           email: formData.email,
@@ -44,28 +44,26 @@ export class RegisterComponent {
           address: "",
           pinCode: "",
           profileImage: "",
-          role:3
+          role: parseInt(formData.role) // Send 2 or 3
         });
 
-        console.log("the backend response is", response.data.message);
-
-        this.snackBar.open("User registered successfully ✅", 'X', {
+        console.log("the respo of the created contracter from the backend is ", response)
+        this.snackBar.open("Contractor/User registered successfully ✅", 'X', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
           panelClass: ['success-snackbar']
         });
-        // navigate to login page 
+
         this.router.navigate(["/login"], {
-          state: {
-            prop: formData
-          }
-        })
-        this.registerForm.reset();
+          state: { prop: formData }
+        });
+
+        this.registerForm.reset({ role: '2' }); // reset with default role
       } catch (err) {
         console.error("Registration Failed::", err);
         let errorMessage = "Registration failed ❌";
-        if (axios.isAxiosError(err) && err.response && err.response.data?.message) {
+        if (axios.isAxiosError(err) && err.response?.data?.message) {
           errorMessage = err.response.data.message;
         }
 

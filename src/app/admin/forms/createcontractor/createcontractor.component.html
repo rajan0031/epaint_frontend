@@ -1,0 +1,97 @@
+<div class="max-w-xl mx-auto mt-10 bg-white shadow-md rounded-lg p-8">
+    <h2 class="text-3xl font-bold text-blue-700 mb-6 text-center">Create Contractor 👷‍♂️</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Name -->
+        <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Full Name</label>
+            <input type="text" formControlName="name"
+                class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Enter full name" />
+            <small class="text-red-500" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+                Name is required (min 2 characters).
+            </small>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Email Address</label>
+            <input type="email" formControlName="email"
+                class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Enter email address" />
+            <small class="text-red-500"
+                *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+                Valid email is required.
+            </small>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Password</label>
+            <input type="password" formControlName="password"
+                class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Create a password" />
+            <small class="text-red-500"
+                *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                Password must be at least 6 characters.
+            </small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Confirm Password</label>
+            <input type="password" formControlName="confirmPassword"
+                class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="Confirm password" />
+            <small class="text-red-500"
+                *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid">
+                Please confirm your password.
+            </small>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="mb-4">
+            <label class="block text-gray-700 mb-2">Contact Number</label>
+            <input type="text" formControlName="contactNumber"
+                class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                placeholder="10-digit contact number" />
+            <small class="text-red-500"
+                *ngIf="registerForm.get('contactNumber')?.touched && registerForm.get('contactNumber')?.invalid">
+                Enter a valid 10-digit contact number.
+            </small>
+        </div>
+
+        <!-- Role Selector -->
+        <div class="mb-6">
+            <label class="block text-gray-700 mb-2">Select Role</label>
+            <select formControlName="role"
+                class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option value="2">Contractor</option>
+                <option value="3">User</option>
+            </select>
+            <small class="text-red-500" *ngIf="registerForm.get('role')?.touched && registerForm.get('role')?.invalid">
+                Please select a role.
+            </small>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" [disabled]="isLoading"
+            class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center relative">
+
+            <!-- Invisible placeholder to reserve space -->
+            <span [class.invisible]="isLoading">Register</span>
+
+            <!-- Loader on top -->
+            <div *ngIf="isLoading"
+                class="absolute inset-0 flex items-center justify-center bg-blue-600 bg-opacity-60 rounded-lg">
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                </svg>
+            </div>
+        </button>
+
+    </form>
+</div>

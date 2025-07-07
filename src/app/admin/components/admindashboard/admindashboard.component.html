@@ -1,0 +1,24 @@
+<div class="flex min-h-screen flex-col md:flex-row">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 bg-blue-100 border-r border-gray-300 p-4">
+        <h2 class="text-2xl font-bold text-blue-700 mb-6">Admin Panel 🛠️</h2>
+
+        <nav class="space-y-3">
+            <button (click)="showCreateContractor()" [ngClass]="{'font-bold text-blue-700': activeView === 'create'}"
+                class="block w-full text-left px-4 py-2 rounded hover:bg-blue-200 transition text-gray-700">
+                ➕ Create Contractor
+            </button>
+
+            <button (click)="showMyProfile()" [ngClass]="{'font-bold text-blue-700': activeView === 'profile'}"
+                class="block w-full text-left px-4 py-2 rounded hover:bg-blue-200 transition text-gray-700">
+                🙍‍♂️ My Profile
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="flex-1 p-4">
+        <app-createcontractor *ngIf="activeView === 'create'"></app-createcontractor>
+        <app-myprofile *ngIf="activeView === 'profile'"></app-myprofile>
+    </main>
+</div>

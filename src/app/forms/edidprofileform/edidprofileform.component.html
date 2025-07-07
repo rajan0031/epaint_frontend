@@ -1,0 +1,73 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-2">
+  <div class="bg-white rounded-lg p-4 sm:p-5 w-full max-w-sm relative shadow-lg">
+    <button class="absolute top-2 right-2 text-gray-400 text-lg hover:text-red-500" (click)="closeModal()">✖</button>
+    <h2 class="text-lg sm:text-xl font-semibold text-blue-700 mb-4 text-center">Edit Profile</h2>
+
+    <form class="grid grid-cols-1 gap-2">
+      <!-- Name -->
+      <div>
+        <label class="block text-xs text-gray-600 mb-1">Name</label>
+        <input type="text" [(ngModel)]="name" name="name" placeholder="Enter your name"
+          class="w-full border border-gray-300 rounded-md px-3 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-xs text-gray-600 mb-1">Email</label>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Enter your email"
+          class="w-full border border-gray-300 rounded-md px-3 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Contact Number -->
+      <div>
+        <label class="block text-xs text-gray-600 mb-1">Contact Number</label>
+        <input type="text" [(ngModel)]="contactNumber" name="contactNumber" placeholder="Enter contact number"
+          class="w-full border border-gray-300 rounded-md px-3 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Address -->
+      <div>
+        <label class="block text-xs text-gray-600 mb-1">Address</label>
+        <input type="text" [(ngModel)]="address" name="address" placeholder="Enter your address"
+          class="w-full border border-gray-300 rounded-md px-3 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Pin Code -->
+      <div>
+        <label class="block text-xs text-gray-600 mb-1">Pin Code</label>
+        <input type="text" [(ngModel)]="pinCode" name="pinCode" placeholder="Enter pin code"
+          class="w-full border border-gray-300 rounded-md px-3 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Profile Image Upload -->
+      <div>
+        <label class="block text-xs text-gray-600 mb-1">Profile Image</label>
+        <input type="file" (change)="onFileSelected($event)" class="w-full text-xs border p-1 rounded" />
+        <button type="button" (click)="uploadImage()" [disabled]="!selectedFile || isUploading"
+          class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-md shadow-sm">
+          {{ isUploading ? 'Uploading...' : 'Upload Image' }}
+        </button>
+        <div *ngIf="profileImage" class="mt-2 text-center">
+          <img [src]="profileImage" alt="Profile Image" class="max-w-[80px] mx-auto rounded shadow" />
+        </div>
+      </div>
+
+      <!-- Role -->
+      <div>
+        <label class="block text-xs text-gray-600 mb-1">Role</label>
+        <select [(ngModel)]="role" name="role"
+          class="w-full border border-gray-300 rounded-md px-3 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option [value]="2">Contractor</option>
+          <option [value]="3">User</option>
+        </select>
+      </div>
+
+      <!-- Save Button -->
+      <button type="button"
+        class="mt-3 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded-md px-4 py-1 font-medium shadow-sm hover:shadow-md transition"
+        (click)="updateProfile()">
+        ✅ Save Changes
+      </button>
+    </form>
+  </div>
+</div>

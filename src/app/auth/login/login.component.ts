@@ -25,8 +25,10 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false]
     });
+
 
     const navigationDetails = this.router.getCurrentNavigation();
     const userDetails = navigationDetails?.extras?.state?.['prop'];
@@ -43,9 +45,20 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isLoading = true;
       try {
-        const { email, password } = this.loginForm.value;
+        const { email, password, rememberMe } = this.loginForm.value;
 
         const response = await axios.post(loginUser, { email, password });
+
+        const token = response.data.token;
+
+        console.log("the login response from the backend is :", token);
+
+        if (rememberMe) {
+          localStorage.setItem('authToken', token);
+        } else {
+          sessionStorage.setItem('authToken', token);
+        }
+
 
         this.showToast("Login successful ✅");
 

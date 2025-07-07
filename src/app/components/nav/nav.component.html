@@ -8,27 +8,37 @@
 
     <!-- Desktop Nav Links -->
     <div class="hidden md:flex items-center space-x-6">
-      <a routerLink="/login" class="text-gray-700 hover:text-blue-600 font-medium transition">
-        Login
-      </a>
-      <a routerLink="/register"
-         class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-xl transition shadow-md">
-        Sign Up
-      </a>
+      <ng-container *ngIf="!isLoggedIn; else loggedInLinks">
+        <a routerLink="/login" class="text-gray-700 hover:text-blue-600 font-medium transition">
+          Login
+        </a>
+        <a routerLink="/register"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-xl transition shadow-md">
+          Sign Up
+        </a>
+      </ng-container>
+      <ng-template #loggedInLinks>
+        <button (click)="goToDashboard()"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-xl transition shadow-md">
+          Dashboard
+        </button>
+        <button (click)="logout()"
+          class="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-xl transition shadow-md">
+          Logout
+        </button>
+      </ng-template>
     </div>
 
     <!-- Mobile Hamburger -->
     <div class="md:hidden">
       <button (click)="toggleMenu()" class="text-gray-700 focus:outline-none">
-        <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"/>
+        <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"/>
+        <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
@@ -36,12 +46,25 @@
 
   <!-- Mobile Nav Links -->
   <div *ngIf="isMenuOpen" class="md:hidden px-4 pb-4 space-y-2 bg-white shadow-inner border-t border-gray-200">
-    <a routerLink="/login" class="block text-gray-700 hover:text-blue-600 font-medium transition py-2">
-      Login
-    </a>
-    <a routerLink="/register"
-       class="block bg-blue-600 hover:bg-blue-700 text-white text-center px-4 py-2 rounded-lg font-semibold transition">
-      Sign Up
-    </a>
+    <ng-container *ngIf="!isLoggedIn; else mobileLogout">
+      <a routerLink="/login" class="block text-gray-700 hover:text-blue-600 font-medium transition py-2">
+        Login
+      </a>
+      <a routerLink="/register"
+        class="block bg-blue-600 hover:bg-blue-700 text-white text-center px-4 py-2 rounded-lg font-semibold transition">
+        Sign Up
+      </a>
+    </ng-container>
+    <ng-template #mobileLogout>
+      <!-- Mobile Dashboard -->
+      <button (click)="goToDashboard()"
+        class="block w-full bg-blue-500 hover:bg-blue-600 text-white text-center px-4 py-2 rounded-lg font-semibold transition">
+        Dashboard
+      </button>
+      <button (click)="logout()"
+        class="block w-full bg-red-500 hover:bg-red-600 text-white text-center px-4 py-2 rounded-lg font-semibold transition">
+        Logout
+      </button>
+    </ng-template>
   </div>
 </nav>
